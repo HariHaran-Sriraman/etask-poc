@@ -1,11 +1,8 @@
 
 import { AgGridReact } from "ag-grid-react";
-import type { CustomCellRendererProps } from "ag-grid-react";
-import { ColDef, ModuleRegistry, ClientSideRowModelModule, PaginationModule, GridOptions,  NumberEditorModule, ValidationModule } from "ag-grid-community";
+import { ColDef, ModuleRegistry, ClientSideRowModelModule, PaginationModule, NumberEditorModule, ValidationModule } from "ag-grid-community";
 import { useState } from 'react';
-import { IconButton } from '@mui/material';
 
-import EmailIcon from '@mui/icons-material/Email';
 
 import {
     SetFilterModule,
@@ -22,102 +19,57 @@ const defaultColDef: ColDef = {
     floatingFilter: false,
     resizable: false,
     sortable: false,
-    editable: true,
-    suppressClickEdit: false
+    editable: true
 }
 
-type taskStatus = 'Open' | 'In Progress' | 'Closed' | 'Pending' | 'Resolved';
 
 interface RowData {
-    caseId: string;
-    assignee: string;
-    taskStatus: taskStatus;
-    team: string;
-    createdDate: string;
-    messages: string[];
+    agreementId: string;
+    accountId: string;
+    brokerageRate: number;
+    callOrPut: string;
+    buyOrSell: string;
+    tradeDate: string;
 }
 
-const ragRenderer = (params: CustomCellRendererProps) => {
-    if (params.value === "In Progress") {
-        return <span className="status-in-progress">{params.value}</span>;
-    } else if (params.value === "Open") {
-        return <span className="status-open">{params.value}</span>;
-    } else if (params.value === "Closed") {
-        return <span className="status-closed">{params.value}</span>;
-    } else if (params.value === "Pending") {
-        return <span className="status-pending">{params.value}</span>;
-    } else {
-        return <span className="rag-element-default">{params.value}</span>;
-    }
-};
 
 const BreaksGrid: React.FC = () => {
 
     const [columnDefs] = useState<ColDef[]>([
-        {
-            headerName: '',
-            field: 'delete',
-            width: 40,
-            cellRenderer: () => {
-                return (
-                    <IconButton
-                        onMouseDown={(e) => e.stopPropagation()}
-                        size="small"
-                        color="info"
-                    >
-                        <EmailIcon fontSize="small" />
-                    </IconButton>
-                )
-            },
-            sortable: false,
-            filter: false,
-            pinned: 'left', // optional: keep it always visible
-        },
-        { headerName: "Case Id", field: "caseId", minWidth: 150, flex: 1 },
-        { headerName: "Team", field: "assignee", minWidth: 150, flex: 1 },
-        {
-            headerName: "Task Status", field: "taskStatus", minWidth: 200, flex: 1,
-            cellRenderer: ragRenderer,
-        },
-        { headerName: "Team2", field: "team", minWidth: 150, flex: 1,  editable: true, onCellEditingStarted: (params) => {
-            params.api.refreshCells({ rowNodes: [params.node] });
-        }
-        },
-        { headerName: "Created Date", field: "createdDate", minWidth: 180, flex: 1 },
+        { headerName: "Aggreement Id", field: "agreementId", minWidth: 150, flex: 1 },
+        { headerName: "Account Id", field: "accountId", minWidth: 150, flex: 1 },
+        { headerName: "Brokerage Rate", field: "brokerageRate", minWidth: 200, flex: 1},
+        { headerName: "Call/Put", field: "callOrPut", minWidth: 150, flex: 1},
+        { headerName: "Buy/Sell", field: "buyOrSell", minWidth: 180, flex: 1 },
     ]);
 
     const sampleRows: RowData[] = [
         {
-            caseId: '001',
-            assignee: 'Front Desk Team',
-            taskStatus: 'Open',
-            team: 'Support',
-            createdDate: '2025-04-22',
-            messages: ['User requested password reset', 'Sent password reset link']
+            agreementId: '6301',
+            accountId: '88456301',
+            brokerageRate: 0.3,
+            callOrPut: 'Call',
+            buyOrSell: 'Buy',
+            tradeDate: '2025-04-22'
         },
         {
-            caseId: '001',
-            assignee: 'Settlement Team',
-            taskStatus: 'In Progress',
-            team: 'Finance',
-            createdDate: '2025-04-21',
-            messages: ['Customer was overcharged', 'Investigating issue']
+            agreementId: '6303',
+            accountId: '88456303',
+            brokerageRate: 0.3,
+            callOrPut: 'Call',
+            buyOrSell: 'Buy',
+            tradeDate: '2025-04-22'
         },
         {
-            caseId: '001',
-            assignee: 'Front Desk Team',
-            taskStatus: 'Resolved',
-            team: 'Product',
-            createdDate: '2025-04-20',
-            messages: ['Requested dark mode feature', 'Added to product roadmap']
+            agreementId: '6305',
+            accountId: '88456305',
+            brokerageRate: 0.3,
+            callOrPut: 'Call',
+            buyOrSell: 'Buy',
+            tradeDate: '2025-04-22'
         }
     ];
 
-    const gridOptions: GridOptions = {
-        onCellEditingStopped: (params) => {
-            params.node.setDataValue("editable", false);
-        }
-    };
 
 
     return (
@@ -132,7 +84,6 @@ const BreaksGrid: React.FC = () => {
                     rowModelType="clientSide"
                     suppressMenuHide={false}
                     rowSelection="single"
-                    gridOptions={gridOptions}
                 />
             </div>
         </>

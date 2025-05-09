@@ -918,7 +918,7 @@ const sampleData: RowData[] = [
 ];
 
 type FrontDeskStore = {
-  frontDeskRowData: RowData[];
+  rowData: RowData[];
   statusCounts: Record<taskStatus, number>
   setRowData: (data: RowData[]) => void;
   removeRow: (caseId: string) => void;
@@ -926,7 +926,7 @@ type FrontDeskStore = {
 };
 
 export const useFrontDeskGridStore = create<FrontDeskStore>((set, get) => ({
-  frontDeskRowData: [ ...sampleData ],
+  rowData: [ ...sampleData ],
   statusCounts: computeStatusCounts([...sampleData]),
 
   setRowData: (data) => {
