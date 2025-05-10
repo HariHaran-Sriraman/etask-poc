@@ -77,11 +77,11 @@ const MessageFrontDeskModal: React.FC<Props> = ({ open, modalType, onClose, sele
       if (isFrontdesk) {
         useFrontDeskGridStore.getState().removeRow(newRow.caseId);
         useSettlementGridStore.getState().addRow(newRow);
-        navigate('/Settlementtasks');
+        // navigate('/Settlementtasks');
       } else {
         useSettlementGridStore.getState().removeRow(newRow.caseId);
         useFrontDeskGridStore.getState().addRow(newRow);
-        navigate('/frontdesktasks');
+        // navigate('/frontdesktasks');
       }
     }
 
