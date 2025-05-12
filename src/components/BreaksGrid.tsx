@@ -47,7 +47,7 @@ const BreaksGrid: React.FC = () => {
         {
             agreementId: '6301',
             accountId: '88456301',
-            brokerageRate: 0.3,
+            brokerageRate: 0.2,
             callOrPut: 'Call',
             buyOrSell: 'Buy',
             tradeDate: '2025-04-22'
@@ -55,7 +55,7 @@ const BreaksGrid: React.FC = () => {
         {
             agreementId: '6303',
             accountId: '88456303',
-            brokerageRate: 0.3,
+            brokerageRate: 0.2,
             callOrPut: 'Call',
             buyOrSell: 'Buy',
             tradeDate: '2025-04-22'
@@ -63,7 +63,7 @@ const BreaksGrid: React.FC = () => {
         {
             agreementId: '6305',
             accountId: '88456305',
-            brokerageRate: 0.3,
+            brokerageRate: 0.2,
             callOrPut: 'Call',
             buyOrSell: 'Buy',
             tradeDate: '2025-04-22'

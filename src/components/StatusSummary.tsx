@@ -17,7 +17,7 @@ const statusColors: Record<Status, string> = {
 const StatusSummary: React.FC = () => {
   const location = useLocation();
   let useGridStore;
-  if(location.pathname === '/Settlementtasks'){
+  if(location.pathname === '/Settlementtasks' || location.pathname === '/breaks') {
     useGridStore= useSettlementGridStore;
   } else {
     useGridStore= useFrontDeskGridStore;

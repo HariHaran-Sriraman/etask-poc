@@ -18,15 +18,18 @@ const Navbar: React.FC = () => {
           textColor="inherit"
           indicatorColor="secondary"
         >
-          {location.pathname === '/settlementtasks' ? (
-            <Tab label="My tasks" component={NavLink} to="/settlementtasks" value={1} />
+          {location.pathname === '/Settlementtasks' || location.pathname === '/breaks' ? (
+            <Tab label="My tasks" component={NavLink} to="/Settlementtasks" value={1} />
           ) : (
             <Tab label="My tasks" component={NavLink} to="/frontdesktasks" value={0} />
           )}
           <Tab label="Team Tasks" component={NavLink} to="/teamtasks" value={2} />
           <Tab label="Cases" component={NavLink} to="/cases" value={3} />
           <Tab label="Email" component={NavLink} to="/email" value={4} />
-          <Tab label="Break" component={NavLink} to="/breaks" value={5} />
+          {(location.pathname === '/Settlementtasks' || location.pathname === '/breaks') && (
+            <Tab label="Break" component={NavLink} to="/breaks" value={5} />
+          ) }
+          
         </Tabs>
 
         {/* Welcome message aligned to the right */}

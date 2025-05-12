@@ -51,7 +51,6 @@ export const useSettlementGridStore = create<SettlementStore>((set, get) => ({
 const channel = new BroadcastChannel("settlement_channel");
 
 useSettlementGridStore.subscribe((state) => {
-  console.log("Sending updated store to other tabs:", state);
   const safeState = {
     rowData: state.rowData, 
     statusCounts: JSON.stringify(state.statusCounts) // Ensure it's serializable
@@ -60,19 +59,13 @@ channel.postMessage(safeState);
 });
 
 channel.onmessage = (event) => {
-  console.log("Received updated store from another tab:", event.data);
-
   const receivedData = event.data;
   const currentState = useSettlementGridStore.getState(); 
 
   if (JSON.stringify(currentState.rowData) !== JSON.stringify(receivedData.rowData)) {
-      
-      console.log("Updating Zustand store with new state from another tab");
       useSettlementGridStore.setState({
           rowData: receivedData.rowData,
           statusCounts: JSON.parse(receivedData.statusCounts) // Convert back to object
       });
-  } else {
-      console.log("Received store update but no actual changes, skipping update");
   }
 };
