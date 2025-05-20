@@ -1,7 +1,8 @@
 
 import { AgGridReact } from "ag-grid-react";
-import { ColDef, ModuleRegistry, ClientSideRowModelModule, PaginationModule, NumberEditorModule, ValidationModule } from "ag-grid-community";
+import { ColDef, ModuleRegistry, ClientSideRowModelModule, PaginationModule, NumberEditorModule, ValidationModule, CellValueChangedEvent  } from "ag-grid-community";
 import { useState } from 'react';
+import { useBreaksGridStore } from '../store/BreaksGridStore';
 
 
 import {
@@ -22,17 +23,6 @@ const defaultColDef: ColDef = {
     editable: true
 }
 
-
-interface RowData {
-    agreementId: string;
-    accountId: string;
-    brokerageRate: number;
-    callOrPut: string;
-    buyOrSell: string;
-    tradeDate: string;
-}
-
-
 const BreaksGrid: React.FC = () => {
 
     const [columnDefs] = useState<ColDef[]>([
@@ -43,33 +33,13 @@ const BreaksGrid: React.FC = () => {
         { headerName: "Buy/Sell", field: "buyOrSell", minWidth: 180, flex: 1 },
     ]);
 
-    const sampleRows: RowData[] = [
-        {
-            agreementId: '6301',
-            accountId: '88456301',
-            brokerageRate: 0.2,
-            callOrPut: 'Call',
-            buyOrSell: 'Buy',
-            tradeDate: '2025-04-22'
-        },
-        {
-            agreementId: '6303',
-            accountId: '88456303',
-            brokerageRate: 0.2,
-            callOrPut: 'Call',
-            buyOrSell: 'Buy',
-            tradeDate: '2025-04-22'
-        },
-        {
-            agreementId: '6305',
-            accountId: '88456305',
-            brokerageRate: 0.2,
-            callOrPut: 'Call',
-            buyOrSell: 'Buy',
-            tradeDate: '2025-04-22'
-        }
-    ];
+   const { rowData, updateBrokerageRate } = useBreaksGridStore();
 
+   const handleCellValueChanged = (params: CellValueChangedEvent) => {
+    if (params.column.getColId() === "brokerageRate") {
+        updateBrokerageRate(params.data.agreementId, params.newValue); // Update the store
+    }
+};
 
 
     return (
@@ -77,13 +47,14 @@ const BreaksGrid: React.FC = () => {
             <div className="ag-theme-alpine" style={{ width: '100%', height: '17vh' }}>
                 <AgGridReact
                     columnDefs={columnDefs}
-                    rowData={sampleRows}
+                    rowData={rowData}
                     defaultColDef={defaultColDef}
                     pagination={false}
                     paginationPageSize={25}
                     rowModelType="clientSide"
                     suppressMenuHide={false}
                     rowSelection="single"
+                    onCellValueChanged={handleCellValueChanged}
                 />
             </div>
         </>

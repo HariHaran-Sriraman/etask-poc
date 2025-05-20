@@ -6,6 +6,7 @@ import SettlementTasks from "./pages/SettlementTasks";
 import Navbar from "./components/Navbar";
 import Container from "./components/Container";
 import Breaks from "./pages/Breaks";
+import CAT from "./pages/CAT";  
 
 const App: React.FC = () => {
   return (
@@ -21,6 +22,8 @@ const App: React.FC = () => {
               <Route path="/cases" element={<FrontDeskTasks />} />
               <Route path="/email" element={<FrontDeskTasks />} />
               <Route path="/breaks" element={<Breaks />} />
+              <Route path="/CAT" element={<CAT />} />
+              <Route path="/charts" element={<Breaks />} />
               <Route path="/" element={<FrontDeskTasks />} />
             </Routes>
           </Box>

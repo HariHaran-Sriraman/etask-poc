@@ -6,7 +6,7 @@ import StatusSummary from './StatusSummary'
 
 const Navbar: React.FC = () => {
   const location = useLocation();
-  const routes = ["/frontdesktasks", "/Settlementtasks", "/teamtasks", "/cases", "/email", "/breaks"];
+  const routes = ["/frontdesktasks", "/Settlementtasks", "/teamtasks", "/cases", "/email", "/CAT", "/charts", "/breaks"];
 
   return (
     <AppBar position="static" sx={{ backgroundColor: "#1976d2" }}>
@@ -26,16 +26,24 @@ const Navbar: React.FC = () => {
           <Tab label="Team Tasks" component={NavLink} to="/teamtasks" value={2} />
           <Tab label="Cases" component={NavLink} to="/cases" value={3} />
           <Tab label="Email" component={NavLink} to="/email" value={4} />
-          {(location.pathname === '/Settlementtasks' || location.pathname === '/breaks') && (
-            <Tab label="Break" component={NavLink} to="/breaks" value={5} />
-          ) }
+          {(location.pathname !== '/Settlementtasks' && location.pathname !== '/breaks') && (
+              <Tab label="CAT" component={NavLink} to="/CAT" value={5} />
+          )}
+          {(location.pathname !== '/Settlementtasks' && location.pathname !== '/breaks') && (
+              <Tab label="Charts" component={NavLink} to="/charts" value={6} />
+          )}
           
+          {(location.pathname === '/Settlementtasks' || location.pathname === '/breaks') && (
+            <Tab label="Break" component={NavLink} to="/breaks" value={7} />
+          ) }
         </Tabs>
 
         {/* Welcome message aligned to the right */}
         <Box flexGrow={1} />
         <Box ml={4} mr={4}>
+        {(location.pathname !== '/breaks' && location.pathname !== '/CAT' && location.pathname !== '/charts') && (
           <StatusSummary />
+        ) }
         </Box>
         <Typography variant="h6" sx={{ marginRight: 2 }}>
           Welcome, User
